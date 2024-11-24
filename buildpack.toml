@@ -1,5 +1,5 @@
 [buildpack]
-name = "Apt"
+name = "Redpanda-console"
 
 [publish.Ignore]
 files = [
