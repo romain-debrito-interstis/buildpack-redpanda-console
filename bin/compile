@@ -151,5 +151,6 @@ topic "Rewrite package-config files"
 find "$BUILD_DIR/.apt" -type f -ipath '*/pkgconfig/*.pc' -print0 | xargs -0 --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='"$BUILD_DIR"'/.apt\1!g'
 
 #Install dependances Redpanda Console
+topic "Install Redpanda console"
 curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | \
 sudo -E bash && sudo apt install redpanda -y
