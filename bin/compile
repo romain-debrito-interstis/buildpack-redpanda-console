@@ -151,6 +151,17 @@ topic "Rewrite package-config files"
 find "$BUILD_DIR/.apt" -type f -ipath '*/pkgconfig/*.pc' -print0 | xargs -0 --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='"$BUILD_DIR"'/.apt\1!g'
 
 #Install dependances Redpanda Console
-topic "Install Redpanda console"
-curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | \
-apt install redpanda -y
+BUILD_DIR=$1
+
+# Télécharger Redpanda
+echo "Téléchargement de Redpanda..."
+curl -L -o redpanda.tar.gz https://github.com/redpanda-data/console/releases/download/v2.7.2/redpanda_console_2.7.2_linux_amd64.tar.gz
+
+# Décompresser et déplacer les fichiers
+echo "Installation de Redpanda..."
+mkdir -p $BUILD_DIR/redpanda
+tar -xzf redpanda.tar.gz -C $BUILD_DIR/redpanda --strip-components=1
+
+# Ajouter les binaires à PATH
+echo "Ajout des binaires au PATH..."
+export PATH=$BUILD_DIR/redpanda/bin:$PATH
